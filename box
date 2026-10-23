@@ -1,9 +1,0 @@
-
-services:
-  - type: web
-    name: trustvault1
-    runtime: python
-    plan: free
-    branch: main
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
