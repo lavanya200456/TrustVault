@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Audit Trail</h2>
+<p class="text-muted">Recent activity for your company.</p>
+
+<div class="card p-3">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Time (UTC)</th>
+                    <th>User ID</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for log in logs %}
+                <tr>
+                    <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ log.user_id if log.user_id else 'Anonymous' }}</td>
+                    <td>{{ log.action }}</td>
+                    <td>{{ log.details }}</td>
+                    <td>
+                        <span class="badge {% if log.result == 'SUCCESS' %}
+                            bg-success{% else %}bg-danger{% endif %}">
+                            {{ log.result }}
+                        </span>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5">No audit records yet.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
